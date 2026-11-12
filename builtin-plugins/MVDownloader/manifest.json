@@ -1,0 +1,1 @@
+{"author":"yousj666","betterncm_version":">=1.0.0","description":"用网易云音乐自己的搜索找歌/MV，一键把 MV 按最高可用画质下载为 .mp4（BetterNCM yousj-plus 增强分支内置插件）","injects":{"Main":[{"file":"main.js"}]},"manifest_version":1,"name":"MVDownloader","ncm-version-req":"> 2.10.2","ncm3-compatible":true,"preview":"preview.png","slug":"MVDownloader","version":"1.0.0"}
