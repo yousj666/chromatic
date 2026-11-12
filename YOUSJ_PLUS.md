@@ -70,6 +70,8 @@
    或按上游 README 手动把构建出的 `BetterNCMII.dll` 改名 `msimg32.dll`
    放进网易云安装目录。本体是 Windows C++ DLL，需要在 Windows 上用
    Visual Studio + vcpkg 构建（本分支未改本体构建流程）。
+   增强版源用的版本表在本仓库 `installer/betterncm3-yousj.json`（与上游同格式，
+   当前 DLL 地址指向上游 1.3.4 官方 Release，因本分支未改本体 C++ 代码）。
 2. 插件：把 `builtin-plugins/MVDownloader.plugin` 复制到
    `<BetterNCM 数据目录>/plugins/`（默认 `C:\betterncm\plugins\`），
    重启网易云客户端。用增强版安装器一键安装时会自动预装这一步。
