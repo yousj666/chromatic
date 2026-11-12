@@ -2,9 +2,10 @@ name: MSBuild
 
 on:
   push:
-    branches: [ "v2" ]
+    branches: [ "v2", "yousj-plus" ]
   pull_request:
     branches: [ "v2" ]
+  workflow_dispatch:
     
 
 env:
@@ -21,7 +22,7 @@ jobs:
     runs-on: windows-latest
     permissions: write-all
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         submodules: recursive
 
@@ -56,7 +57,7 @@ jobs:
           ${{ github.workspace }}/Release_86/BetterNCMII86.dll
 
     - name: Upload Artifact
-      uses: actions/upload-artifact@v3.1.1
+      uses: actions/upload-artifact@v4
       with:
         name: BetterNCMII
         path: |
