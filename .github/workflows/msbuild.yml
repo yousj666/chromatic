@@ -40,6 +40,14 @@ jobs:
         .\vcpkg\bootstrap-vcpkg.bat -disableMetrics
         echo "VCPKG_ROOT=${{ github.workspace }}\vcpkg" >> $env:GITHUB_ENV
         echo "${{ github.workspace }}\vcpkg" >> $env:GITHUB_PATH
+    - name: Seed vcpkg tool downloads
+      # 固定版 vcpkg 要从 7-zip.org 下载 7z2107-extra.7z，该地址现已 404。
+      # 从 7-Zip 官方 GitHub 发布的同一文件预填 vcpkg 的 downloads 缓存
+      # （vcpkg 自行校验哈希，命中就跳过下载）。
+      run: |
+        New-Item -ItemType Directory -Force vcpkg\downloads | Out-Null
+        curl.exe -L -o vcpkg\downloads\7z2107-extra.7z https://github.com/ip7z/7zip/releases/download/21.07/7z2107-extra.7z
+
     - name: Install vcpkg dependencies
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: ./InstallDependencies.bat
