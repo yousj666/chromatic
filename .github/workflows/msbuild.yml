@@ -17,6 +17,9 @@ env:
   # 固定版 vcpkg 的老端口（brotli/fltk 等）配置阶段会直接报错；
   # 用官方给的策略变量让这些老端口按 3.5 策略继续配置。
   CMAKE_POLICY_VERSION_MINIMUM: "3.5"
+  # vcpkg 构建端口时默认不透传任意环境变量，必须用 VCPKG_KEEP_ENV_VARS
+  # 显式保留，上面的策略变量才能进到各端口的 CMake 配置进程里（已实测验证）。
+  VCPKG_KEEP_ENV_VARS: "CMAKE_POLICY_VERSION_MINIMUM"
 
 permissions:
   contents: read
