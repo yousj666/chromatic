@@ -30,9 +30,16 @@ jobs:
       uses: microsoft/setup-msbuild@v1.0.2
       
     - name: Setup vcpkg
-      uses: lukka/run-vcpkg@v10
-      with:
-        vcpkgGitCommitId: 69efe9cc2df0015f0bb2d37d55acde4a75c9a25b
+      # 不再用 lukka/run-vcpkg@v10：它在当前 runner 上检出固定提交时报
+      # pathspec 错误后静默放行，实际跑的是 runner 预装的 C:\vcpkg（版本漂移），
+      # 依赖装不进项目预期的 vcpkg_installed 目录，编译时找不到 neargye/semver.hpp。
+      # 改为自己克隆并 bootstrap 固定提交，并显式钉住 VCPKG_ROOT 与 PATH 优先级。
+      run: |
+        git clone https://github.com/microsoft/vcpkg.git vcpkg
+        git -C vcpkg checkout 69efe9cc2df0015f0bb2d37d55acde4a75c9a25b
+        .\vcpkg\bootstrap-vcpkg.bat -disableMetrics
+        echo "VCPKG_ROOT=${{ github.workspace }}\vcpkg" >> $env:GITHUB_ENV
+        echo "${{ github.workspace }}\vcpkg" >> $env:GITHUB_PATH
     - name: Install vcpkg dependencies
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: ./InstallDependencies.bat
